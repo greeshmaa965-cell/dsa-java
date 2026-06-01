@@ -1,46 +1,50 @@
 class Solution {
 
-    public int findKRotation(int[] nums) {
+    public int findKRotation(int[] arr) {
 
         int low = 0;
-        int high = nums.length - 1;
+        int high = arr.length - 1;
 
-        int minIndex = 0;
+        int ans = Integer.MAX_VALUE;
+        int index = -1;
 
         while(low <= high) {
 
-            // already sorted
-            if(nums[low] <= nums[high]) {
+            int mid = low + (high - low) / 2;
 
-                if(nums[low] < nums[minIndex]) {
-                    minIndex = low;
+            // Search space already sorted
+            if(arr[low] <= arr[high]) {
+
+                if(arr[low] < ans) {
+                    ans = arr[low];
+                    index = low;
                 }
                 break;
             }
 
-            int mid = low + (high - low) / 2;
+            // Left half sorted
+            if(arr[low] <= arr[mid]) {
 
-            // left half sorted
-            if(nums[low] <= nums[mid]) {
-
-                if(nums[low] < nums[minIndex]) {
-                    minIndex = low;
+                if(arr[low] < ans) {
+                    ans = arr[low];
+                    index = low;
                 }
 
                 low = mid + 1;
             }
 
-            // right half sorted
+            // Right half sorted
             else {
 
-                if(nums[mid] < nums[minIndex]) {
-                    minIndex = mid;
+                if(arr[mid] < ans) {
+                    ans = arr[mid];
+                    index = mid;
                 }
 
                 high = mid - 1;
             }
         }
 
-        return minIndex;
+        return index;
     }
 }
