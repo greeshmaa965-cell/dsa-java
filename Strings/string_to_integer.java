@@ -1,5 +1,4 @@
 class Solution {
-
     public int myAtoi(String s) {
 
         s = s.trim();
@@ -10,7 +9,7 @@ class Solution {
 
         int i = 0;
         int sign = 1;
-        int num = 0;
+        long num = 0;
 
         if (s.charAt(0) == '+') {
             sign = 1;
@@ -29,6 +28,16 @@ class Solution {
             i++;
         }
 
-        return sign * num;
+        num = num * sign;
+
+        if (num > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        }
+
+        if (num < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+
+        return (int) num;
     }
 }
