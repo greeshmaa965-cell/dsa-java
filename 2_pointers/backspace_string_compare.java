@@ -1,55 +1,39 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
 
-        int i = s.length() - 1;
-        int j = t.length() - 1;
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
 
-        int skipS = 0;
-        int skipT = 0;
+        int hash = 0;
 
-        while (i >= 0 || j >= 0) {
+        for (int i = s.length() - 1; i >= 0; i--) {
 
-            // Find next valid character in s
-            while (i >= 0) {
-                if (s.charAt(i) == '#') {
-                    skipS++;
-                    i--;
-                } else if (skipS > 0) {
-                    skipS--;
-                    i--;
-                } else {
-                    break;
-                }
+            if (s.charAt(i) == '#') {
+                hash++;
             }
-
-            // Find next valid character in t
-            while (j >= 0) {
-                if (t.charAt(j) == '#') {
-                    skipT++;
-                    j--;
-                } else if (skipT > 0) {
-                    skipT--;
-                    j--;
-                } else {
-                    break;
-                }
+            else if (hash > 0) {
+                hash--;
             }
-
-            // Compare valid characters
-            if (i >= 0 && j >= 0 &&
-                s.charAt(i) != t.charAt(j)) {
-                return false;
+            else {
+                sb1.append(s.charAt(i));
             }
-
-            // One string has a character, other doesn't
-            if ((i >= 0) != (j >= 0)) {
-                return false;
-            }
-
-            i--;
-            j--;
         }
 
-        return true;
+        hash = 0;
+
+        for (int i = t.length() - 1; i >= 0; i--) {
+
+            if (t.charAt(i) == '#') {
+                hash++;
+            }
+            else if (hash > 0) {
+                hash--;
+            }
+            else {
+                sb2.append(t.charAt(i));
+            }
+        }
+
+        return sb1.reverse().toString().equals(sb2.reverse().toString());
     }
 }
